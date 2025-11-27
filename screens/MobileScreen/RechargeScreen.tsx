@@ -82,7 +82,7 @@ export default function RechargeScreen() {
       {/* Header */}
       <View
         className="bg-white px-4 pt-4 pb-4 flex-row items-center shadow-md rounded-b-2xl"
-        style={{ paddingTop: Platform.OS === "ios" ? 50 : 50 }}
+        style={{ paddingTop: Platform.OS === "ios" ? 15 : 15 }}
       >
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
           <Ionicons name="arrow-back" size={32} color="#16a34a" />
@@ -119,9 +119,10 @@ export default function RechargeScreen() {
         {!showFullUI && (
           <View className="mb-5">
             <TextInput
-              className="bg-white border border-green-500 rounded-full px-4 py-3 text-base"
+              className="bg-white border border-green-500 placeholder:text-gray-400 rounded-full px-4 py-3 text-base"
               value={mobileNumber}
               onChangeText={handleMobileNumberChange}
+              placeholderTextColor="#A3A3A3"
               placeholder="Enter 10-digit mobile number"
               keyboardType="phone-pad"
               maxLength={14}

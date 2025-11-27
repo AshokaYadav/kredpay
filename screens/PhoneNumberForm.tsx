@@ -9,11 +9,13 @@ import {
   Linking,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
   PhoneNumberForm: undefined;
   OTPScreen: {phoneNumber: string};
   RegisterScreen: {phoneNumber: string};
+  Main: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PhoneNumberForm'>;
@@ -48,7 +50,18 @@ const PhoneNumberForm: React.FC<Props> = ({navigation}) => {
 
       console.log('Response:', response);
 
-      if (response.status === 200) {
+      const data = await response.json();
+
+      console.log(data?.data?.token);
+
+      await AsyncStorage.setItem('userData', JSON.stringify(data?.data));
+
+      if (response.status === 200 && data?.data?.token) {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Main'}],
+        });
+      } else if (response.status === 200) {
         navigation.navigate('OTPScreen', {phoneNumber: mobile});
       } else if (response.status === 404) {
         navigation.navigate('RegisterScreen', {phoneNumber: mobile});
@@ -85,9 +98,10 @@ const PhoneNumberForm: React.FC<Props> = ({navigation}) => {
       <View className="w-full px-8">
         <TextInput
           ref={inputRef}
-          className="h-16 border border-gray-300 rounded-full px-4  bg-white mb-5 text-2xl pl-8"
+          className="h-16 border border-gray-300 rounded-full px-4 placeholder:text-gray-400  bg-white mb-5 text-2xl pl-8"
           placeholder="Enter Mobile Number"
           keyboardType="phone-pad"
+          placeholderTextColor="#9CA3AF" // gray-400
           value={phoneNumber}
           onChangeText={handleChange}
           maxLength={10}

@@ -447,7 +447,7 @@ const TransactionsScreen = () => {
     <View className="flex-1 bg-gray-100">
 
       {/* Header */}
-     <View className="bg-white px-4 mb-2 pt-4 pb-4 flex-row items-center shadow-md">
+     {/* <View className="bg-white px-4 mb-2 pt-4 pb-4 flex-row items-center shadow-md">
          <TouchableOpacity
            onPress={() => navigation.goBack()}
            className="mr-3 b">
@@ -457,7 +457,7 @@ const TransactionsScreen = () => {
          <Text className="text-lg font-semibold text-green-600">
            Transaction History
          </Text>
-       </View>
+       </View> */}
 
       {/* Main Content */}
       <View className="flex-1 justify-center px-6">
@@ -470,7 +470,7 @@ const TransactionsScreen = () => {
           </Text>
 
           <Text className="text-gray-500 text-center mt-3 leading-6">
-            We are working on something amazing for your Transactions
+            We are working on something amazing for your Qr
             section. Stay tuned for updates!
           </Text>
 

@@ -57,11 +57,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ visible, onClose,loadWallet
 
               {/* Enter Amount */}
               <TextInput
+                placeholderTextColor="#A3A3A3"
                 placeholder="Enter Amount"
                 keyboardType="numeric"
                 value={amount}
                 onChangeText={setAmount}
-                className="border border-gray-300 rounded-2xl px-4 py-4 text-center text-lg mb-6 bg-gray-50"
+                className="border border-gray-300 placeholder:text-gray-400 rounded-2xl px-4 py-4 text-center text-lg mb-6 bg-gray-50"
               />
 
               {/* Quick Amount Buttons */}

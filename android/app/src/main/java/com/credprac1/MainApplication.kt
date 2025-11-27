@@ -1,4 +1,4 @@
-package com.credprac1
+package com.kredpay
 
 import android.app.Application
 import com.facebook.react.PackageList

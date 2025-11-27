@@ -21,6 +21,8 @@ const RechargeList: React.FC<RechargeListProps> = ({
     );
   }
 
+  console.log(data);
+
   return (
     <FlatList
       data={data}
@@ -60,8 +62,18 @@ const RechargeList: React.FC<RechargeListProps> = ({
                 <Text className="text-xs text-green-600 italic">
                   Cash Back -{' '}
                 </Text>
-                <Text className="text-xs text-gray-700">₹{item.price}</Text>
-              </View>
+                <Text className="text-xs text-gray-700">
+  ₹{
+    (() => {
+      const result = Number(item.price) - Math.abs(Number(item.charge_amount));
+      const str = result.toString();      // Convert to string
+      const parts = str.split(".");       // Break integer + decimals
+      if (parts.length === 1) return str; // no decimal
+      return parts[0] + "." + parts[1].slice(0, 2); // take EXACT last 2
+    })()
+  }
+</Text>
+ </View>
             </View>
 
             <View className="flex-row justify-between items-center mt-0.5">

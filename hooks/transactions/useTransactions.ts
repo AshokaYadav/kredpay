@@ -52,7 +52,7 @@ export const useTransactions = ({defaultType = 'Recharges'}: UseTransactionsProp
       if (endDate) payload.endDate = endDate;
 
       const res = await api.put(
-        'https://api.recharge.kashishindiapvtltd.com/recharge/history',
+        '/recharge/history',
         payload,
         {
           headers: {
@@ -87,7 +87,7 @@ export const useTransactions = ({defaultType = 'Recharges'}: UseTransactionsProp
 
 
       const res = await api.put(
-        'https://api.recharge.kashishindiapvtltd.com/ticket/recharges',
+        '/ticket/recharges',
         payload,
         {
           headers: {

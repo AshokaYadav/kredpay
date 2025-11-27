@@ -226,7 +226,7 @@
 //             </View>
 
 //             <View className="flex-row justify-between items-center mt-0.5">
-             
+
 //               <View className="flex-row items-center">
 //                 <Text
 //                   className={`text-xs font-bold ${
@@ -250,20 +250,21 @@
 // };
 
 // export default LedgerBook;
-import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+
+import React from 'react';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 
 const validTypes = [
-  "RECHARGE_DEBIT",
-  "WALLET_DEBIT",
-  "ADJUSTMENT_DEBIT",
-  "RECHARGE_COMMISSION",
+  'RECHARGE_DEBIT',
+  'WALLET_DEBIT',
+  'ADJUSTMENT_DEBIT',
+  'RECHARGE_COMMISSION',
 ];
 
 const validMsgs = [
-  "Transaction Success by Admin",
-  "Successfully Accepted",
-  "Success",
+  'Transaction Success by Admin',
+  'Successfully Accepted',
+  'Success',
 ];
 
 interface RechargeListProps {
@@ -272,7 +273,7 @@ interface RechargeListProps {
   onSelect: (item: any) => void;
 }
 
-const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) => {
+const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-50">
@@ -286,73 +287,74 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
       const operator = item.rechargeData?.operator?.name;
       const circle = item.rechargeData?.circle?.name
         ? ` [${item.rechargeData?.category?.name}] `
-        : "";
+        : '';
       const mobile = item.rechargeData?.mobile;
 
-      if (item.msg === "Transaction Success by Admin")
+      if (item.msg === 'Transaction Success by Admin')
         return (
           <View>
             <Text className="text-sm font-semibold text-gray-900">
-              Success By Admin {operator}{circle} No. {mobile}
+              Success By Admin {operator}
+              {circle} No. {mobile}
             </Text>
             <Text className="text-xs text-gray-500 mt-1">
-              {item.msg.replace("Error transferring commission:", "")}
+              {item.msg.replace('Error transferring commission:', '')}
             </Text>
           </View>
         );
 
-      if (item.type === "RECHARGE_DEBIT")
+      if (item.type === 'RECHARGE_DEBIT')
         return (
           <View>
             <Text className="text-sm font-semibold text-gray-900">
-              Debit to {operator}{circle} No. {mobile}
+              Debit to {operator}
+              {circle} No. {mobile}
             </Text>
             <Text className="text-xs text-gray-500 mt-1">
-              {item.msg.replace("Error transferring commission:", "")}
+              {item.msg.replace('Error transferring commission:', '')}
             </Text>
           </View>
         );
 
-      if (item.type === "RECHARGE_COMMISSION")
+      if (item.type === 'RECHARGE_COMMISSION')
         return (
           <View>
             <Text className="text-sm font-semibold text-gray-900">
-              {item.msg === "Transaction Failed by Admin"
-                ? "Failed By Admin"
-                : "Refund To"}{" "}
-              {operator}{circle} No. {mobile}
+              {item.msg === 'Transaction Failed by Admin'
+                ? 'Failed By Admin'
+                : 'Refund To'}{' '}
+              {operator}
+              {circle} No. {mobile}
             </Text>
             <Text className="text-xs text-gray-500 mt-1">
-              {item.msg.replace("Error transferring commission:", "")}
+              {item.msg.replace('Error transferring commission:', '')}
             </Text>
           </View>
         );
 
       return (
-        <Text className="text-sm text-gray-700">{item?.msg || "---"}</Text>
+        <Text className="text-sm text-gray-700">{item?.msg || '---'}</Text>
       );
     }
 
-    return (
-      <Text className="text-sm text-gray-700">{item?.msg || "---"}</Text>
-    );
+    return <Text className="text-sm text-gray-700">{item?.msg || '---'}</Text>;
   };
 
   const getDebitCreditLabel = (item: any) =>
     validTypes.includes(item.type) && validMsgs.includes(item.msg)
-      ? "Debited"
-      : "Credited";
+      ? 'Debited'
+      : 'Credited';
 
   const getChargeAmount = (item: any) =>
     validTypes.includes(item.type) && validMsgs.includes(item.msg)
-      ? String(item.amount).replace("-", "")
-      : "---";
+      ? String(item.amount).replace('-', '')
+      : '---';
 
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item?.id?.toString()}
-      contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 12 }}
+      keyExtractor={item => item?.id?.toString()}
+      contentContainerStyle={{paddingHorizontal: 16, paddingVertical: 12}}
       ListEmptyComponent={
         <View className="flex-1 justify-center items-center py-20">
           <Text className="text-center text-gray-400 text-base">
@@ -360,13 +362,11 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
           </Text>
         </View>
       }
-      renderItem={({ item }) => (
+      renderItem={({item}) => (
         <TouchableOpacity
           onPress={() => onSelect(item)}
           className="bg-white rounded-xl mb-4 shadow-sm border border-gray-200 overflow-hidden"
-          activeOpacity={0.7}
-        >
-
+          activeOpacity={0.7}>
           {/* Header Without Image — Clean New Design */}
           <View className="px-4 py-3 bg-blue-50 border-b border-blue-100 rounded-t-xl">
             <Text className="text-[13px] font-semibold text-blue-700 uppercase tracking-wide">
@@ -383,11 +383,12 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
 
           {/* Transaction Info */}
           <View className="px-4 pb-4 bg-white space-y-3">
-
             {/* Cashback */}
-            {item.type !== "CASH" && item.type !== "RECHARGE_COMMISSION" ? (
+            {item.type !== 'CASH' && item.type !== 'RECHARGE_COMMISSION' ? (
               <View className="flex-row justify-between items-center border-b border-gray-200 pb-2">
-                <Text className="text-xs text-gray-500 uppercase">Cashback</Text>
+                <Text className="text-xs text-gray-500 uppercase">
+                  Cashback
+                </Text>
                 <Text className="text-sm font-bold text-green-600">
                   ₹
                   {item.amount != null &&
@@ -397,7 +398,7 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
                         item.amount -
                         (item.opening_balance - item.closing_balance)
                       ).toFixed(2)
-                    : "---"}
+                    : '---'}
                 </Text>
               </View>
             ) : null}
@@ -407,7 +408,7 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
               <View className="flex-row justify-between">
                 <Text className="text-xs text-gray-500">Opening Balance</Text>
                 <Text className="text-sm font-semibold text-gray-800">
-                  ₹{item?.opening_balance || "---"}
+                  ₹{item?.opening_balance || '---'}
                 </Text>
               </View>
 
@@ -421,12 +422,11 @@ const LedgerBook: React.FC<RechargeListProps> = ({ data, loading, onSelect }) =>
               <View className="flex-row justify-between pt-2 border-t border-gray-200">
                 <Text className="text-xs text-gray-500">Closing Balance</Text>
                 <Text className="text-base font-bold text-gray-900">
-                  ₹{item?.closing_balance || "---"}
+                  ₹{item?.closing_balance || '---'}
                 </Text>
               </View>
             </View>
           </View>
-
         </TouchableOpacity>
       )}
     />

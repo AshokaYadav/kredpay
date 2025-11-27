@@ -99,12 +99,13 @@ const ResetPinModal: React.FC<Props> = ({visible, onClose, onSuccess}) => {
           {step === 'mpin' && (
             <TextInput
               placeholder="Enter 4-digit new MPIN"
+              placeholderTextColor="#A3A3A3"
               value={mpin}
               onChangeText={t => setMpin(t.replace(/[^0-9]/g, ''))}
               maxLength={4}
               keyboardType="number-pad"
               editable={!loading}
-              className="rounded-full px-4 py-4 border border-gray-200 bg-gray-50 mb-4 shadow-sm text-center text-lg"
+              className="rounded-full px-4 py-4 border border-gray-200 placeholder:text-gray-400 bg-gray-50 mb-4 shadow-sm text-center text-lg"
             />
           )}
           {step === 'otp' && (

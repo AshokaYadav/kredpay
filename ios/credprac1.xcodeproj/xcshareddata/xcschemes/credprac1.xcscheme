@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "credprac1.app"
-               BlueprintName = "credprac1"
-               ReferencedContainer = "container:credprac1.xcodeproj">
+               BuildableName = "kredpay.app"
+               BlueprintName = "kredpay"
+               ReferencedContainer = "container:kredpay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "credprac1Tests.xctest"
-               BlueprintName = "credprac1Tests"
-               ReferencedContainer = "container:credprac1.xcodeproj">
+               BuildableName = "kredpayTests.xctest"
+               BlueprintName = "kredpayTests"
+               ReferencedContainer = "container:kredpay.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "credprac1.app"
-            BlueprintName = "credprac1"
-            ReferencedContainer = "container:credprac1.xcodeproj">
+            BuildableName = "kredpay.app"
+            BlueprintName = "kredpay"
+            ReferencedContainer = "container:kredpay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "credprac1.app"
-            BlueprintName = "credprac1"
-            ReferencedContainer = "container:credprac1.xcodeproj">
+            BuildableName = "kredpay.app"
+            BlueprintName = "kredpay"
+            ReferencedContainer = "container:kredpay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
