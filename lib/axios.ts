@@ -18,9 +18,10 @@ const api = axios.create({
 api.interceptors.request.use(
   async (config) => {
     const stored = await AsyncStorage.getItem('userData');
+    let token;
     if (stored) {
       const userData = JSON.parse(stored);
-      const token = userData?.token;
+       token = userData?.token;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -28,6 +29,7 @@ api.interceptors.request.use(
      console.log('➡️ Request URL:', `${config.baseURL}${config.url}`);
     console.log('➡️ Method:', config.method?.toUpperCase());
     console.log('➡️ Data:', config.data);
+    console.log('token:',token);
     return config;
   },
   (error) => {
@@ -40,6 +42,7 @@ api.interceptors.response.use(
   (response) =>  {
     // Check for authentication errors in successful responses
     console.log(response);
+    
     if (response.data?.err === 'Authentication required' || 
         (response.data?.message === 'Failed' && response.data?.data === null)) {
       console.warn('🔐 Authentication error detected in response');

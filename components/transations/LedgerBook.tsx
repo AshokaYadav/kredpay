@@ -337,7 +337,14 @@ const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
       );
     }
 
-    return <Text className="text-sm text-gray-700">{item?.msg || '---'}</Text>;
+    return (
+      <View>
+        <Text className="text-sm text-gray-700">{item?.msg || '---'}</Text>
+        <Text className="text-sm text-gray-700">
+          RRN-{item?.bank_rrn || '---'}
+        </Text>
+      </View>
+    );
   };
 
   const getDebitCreditLabel = (item: any) =>
@@ -347,7 +354,7 @@ const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
 
   const getChargeAmount = (item: any) =>
     validTypes.includes(item.type) && validMsgs.includes(item.msg)
-      ? String(item.amount).replace('-', '')
+      ? String(item?.rechargeData?.charge_amount).replace('-', '')
       : '---';
 
   return (
@@ -368,14 +375,38 @@ const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
           className="bg-white rounded-xl mb-4 shadow-sm border border-gray-200 overflow-hidden"
           activeOpacity={0.7}>
           {/* Header Without Image — Clean New Design */}
-          <View className="px-4 py-3 bg-blue-50 border-b border-blue-100 rounded-t-xl">
-            <Text className="text-[13px] font-semibold text-blue-700 uppercase tracking-wide">
+          <View className="flex-row justify-between items-center px-4 py-3 bg-blue-50 border-b border-blue-100 rounded-t-xl">
+            {/* <Text className="text-[13px] font-semibold text-blue-700 uppercase tracking-wide">
+    {getDebitCreditLabel(item)}
+  </Text> */}
+            <Text
+              className={`text-[13px] font-semibold uppercase tracking-wide ${
+                getDebitCreditLabel(item) === 'Credited'
+                  ? 'text-green-600'
+                  : 'text-red-600'
+              }`}>
               {getDebitCreditLabel(item)}
+            </Text>
+
+            <Text className="text-[13px] font-semibold text-blue-700 uppercase tracking-wide">
+              ₹{item?.rechargeData?.price ?? item?.amount}
             </Text>
           </View>
 
-          {/* Description Box */}
           <View className="p-4 bg-white">
+            <View className="rounded-md p-3 bg-gray-50 border border-gray-200">
+              <Text className="text-[13px] font-semibold text-blue-700 tracking-wide">
+                {new Date(item?.createdAt).toLocaleString()}
+              </Text>
+
+              <Text className="text-[13px] font-semibold text-green-700 tracking-wide mt-1">
+                TXID: {item?.rechargeData?.reference_code}
+              </Text>
+            </View>
+          </View>
+
+          {/* Description Box */}
+          <View className="px-4 bg-white">
             <View className="rounded-md p-3 bg-gray-50 border border-gray-200">
               {renderTransactionDescription(item)}
             </View>
@@ -383,26 +414,6 @@ const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
 
           {/* Transaction Info */}
           <View className="px-4 pb-4 bg-white space-y-3">
-            {/* Cashback */}
-            {item.type !== 'CASH' && item.type !== 'RECHARGE_COMMISSION' ? (
-              <View className="flex-row justify-between items-center border-b border-gray-200 pb-2">
-                <Text className="text-xs text-gray-500 uppercase">
-                  Cashback
-                </Text>
-                <Text className="text-sm font-bold text-green-600">
-                  ₹
-                  {item.amount != null &&
-                  item.opening_balance != null &&
-                  item.closing_balance != null
-                    ? (
-                        item.amount -
-                        (item.opening_balance - item.closing_balance)
-                      ).toFixed(2)
-                    : '---'}
-                </Text>
-              </View>
-            ) : null}
-
             {/* Grid Values */}
             <View className="space-y-2">
               <View className="flex-row justify-between">
@@ -412,12 +423,33 @@ const LedgerBook: React.FC<RechargeListProps> = ({data, loading, onSelect}) => {
                 </Text>
               </View>
 
-              <View className="flex-row justify-between">
-                <Text className="text-xs text-gray-500">Charge Amount</Text>
-                <Text className="text-sm font-semibold text-gray-800">
-                  ₹{getChargeAmount(item)}
-                </Text>
-              </View>
+              {item?.rechargeData && (
+                <View className="flex-row justify-between">
+                  <Text className="text-xs text-gray-500">Charge Amount</Text>
+                  <Text className="text-sm font-semibold text-gray-800">
+                    ₹{getChargeAmount(item)}
+                  </Text>
+                </View>
+              )}
+              {/* Cashback */}
+              {item.type !== 'CASH' && item.type !== 'RECHARGE_COMMISSION' ? (
+                <View className="flex-row justify-between items-center border-b border-gray-200 pb-2">
+                  <Text className="text-xs text-gray-500 uppercase">
+                    Cashback
+                  </Text>
+                  <Text className="text-sm font-bold text-green-600">
+                    ₹
+                    {item.amount != null &&
+                    item.opening_balance != null &&
+                    item.closing_balance != null
+                      ? (
+                          item.amount -
+                          (item.opening_balance - item.closing_balance)
+                        ).toFixed(2)
+                      : '---'}
+                  </Text>
+                </View>
+              ) : null}
 
               <View className="flex-row justify-between pt-2 border-t border-gray-200">
                 <Text className="text-xs text-gray-500">Closing Balance</Text>

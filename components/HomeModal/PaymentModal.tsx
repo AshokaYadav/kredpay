@@ -22,7 +22,10 @@ interface PaymentModalProps {
 const quickAmounts = [100, 500, 1000, 2000];
 
 const PaymentModal: React.FC<PaymentModalProps> = ({ visible, onClose,loadWallet }) => {
+  
   const [amount, setAmount] = useState("");
+
+
   const { isLoading, isWaitingForPayment, handlePayment } = useWalletPayment(onClose,loadWallet);
 
   return (

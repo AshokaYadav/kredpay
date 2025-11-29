@@ -63,17 +63,19 @@ const RechargeList: React.FC<RechargeListProps> = ({
                   Cash Back -{' '}
                 </Text>
                 <Text className="text-xs text-gray-700">
-  ₹{
-    (() => {
-      const result = Number(item.price) - Math.abs(Number(item.charge_amount));
-      const str = result.toString();      // Convert to string
-      const parts = str.split(".");       // Break integer + decimals
-      if (parts.length === 1) return str; // no decimal
-      return parts[0] + "." + parts[1].slice(0, 2); // take EXACT last 2
-    })()
-  }
-</Text>
- </View>
+                  ₹
+                     { (Math.abs(parseFloat(item.price)) - Math.abs(parseFloat(item.charge_amount))).toFixed(2)}
+                   
+                </Text>
+                 {/* <Text className="text-xs text-gray-700">
+                  ₹
+                 {typeof Number(item.price)}---   
+                </Text>
+                 <Text className="text-xs text-gray-700">
+                  ₹
+                  {typeof item.charge_amount}
+                </Text> */}
+              </View>
             </View>
 
             <View className="flex-row justify-between items-center mt-0.5">

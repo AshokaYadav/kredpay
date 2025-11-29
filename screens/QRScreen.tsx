@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {API_TOKEN, USER_ID} from '../config';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import TransactionModal from '../components/transations/TransactionModal';
 import api from '../lib/axios';
 import RechargeList from '../components/transations/RechargeList';
@@ -49,6 +49,19 @@ const QRScreen = () => {
     fetchData,
     fetchWalletHistory,
   } = useTransactions({defaultType: 'Recharges'});
+
+
+  useFocusEffect(
+  useCallback(() => {
+    setSelectedItem("Recharges");
+    setStartDate("");
+    setEndDate("");
+
+    fetchData(); // default API refresh
+
+  }, [])
+);
+
 
   const items = [
     {id: '1', name: 'Recharges'},
@@ -155,7 +168,8 @@ const QRScreen = () => {
               <TouchableOpacity
                 onPress={() => {
                   if (selectedItem == item.name) {
-                    fetchData();
+                    // fetchData();
+                    return;
                   }
 
                   setStartDate('');

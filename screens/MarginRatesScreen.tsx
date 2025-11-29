@@ -22,18 +22,18 @@ interface ServiceItemProps {
 const MarginRatesScreen: React.FC = () => {
      const navigation = useNavigation();   // 👈 navigation hook
   const prepaidServices: Service[] = [
-    { id: 1, name: 'Airtel', rate: 'Flat 1.50%', logo: require('../assets/margin/airtel.webp') },
-    { id: 2, name: 'Jio', rate: 'Flat 1.05%', logo: require('../assets/margin/jio.png') },
-    { id: 3, name: 'Vi', rate: 'Flat 3.5%', logo: require('../assets/margin/vi.png') },
-    { id: 4, name: 'BSNL TopUp', rate: 'Flat 4.5%', logo: require('../assets/margin/bsnl.png') },
+    { id: 1, name: 'Airtel', rate: 'Flat 1.80%', logo: require('../assets/margin/airtel.webp') },
+    { id: 2, name: 'Jio', rate: 'Flat 1.00%', logo: require('../assets/margin/jio.png') },
+    { id: 3, name: 'Vi', rate: 'Flat 3.70%', logo: require('../assets/margin/vi.png') },
+    { id: 4, name: 'BSNL TopUp', rate: 'Flat 5.00%', logo: require('../assets/margin/bsnl.png') },
   ];
 
   const dthServices: Service[] = [
-    { id: 1, name: 'Tata Play', rate: 'Flat 4.05%', logo: require('../assets/margin/tata-plya.webp') },
-    { id: 2, name: 'Dish TV', rate: 'Flat 4.05%', logo: require('../assets/margin/dishtv.png') },
-    { id: 3, name: 'D2H', rate: 'Flat 4.05%', logo: require('../assets/margin/dtwoh.png') },
-    { id: 4, name: 'Sun Direct', rate: 'Flat 4.05%', logo: require('../assets/margin/sundirect.png') },
-    { id: 5, name: 'Airtel Digital TV', rate: 'Flat 4.05%', logo: require('../assets/margin/airtel.webp') },
+    { id: 1, name: 'Tata Play', rate: 'Flat 3.20%', logo: require('../assets/margin/tata-plya.webp') },
+    { id: 2, name: 'Dish TV', rate: 'Flat 3.80%', logo: require('../assets/margin/dishtv.png') },
+    { id: 3, name: 'D2H', rate: 'Flat 3.80%', logo: require('../assets/margin/dtwoh.png') },
+    { id: 4, name: 'Sun Direct', rate: 'Flat 3.50%', logo: require('../assets/margin/sundirect.png') },
+    { id: 5, name: 'Airtel Digital TV', rate: 'Flat 3.50%', logo: require('../assets/margin/airtel.webp') },
   ];
 
 

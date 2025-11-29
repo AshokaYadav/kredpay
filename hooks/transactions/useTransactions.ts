@@ -134,6 +134,7 @@ export const useTransactions = ({defaultType = 'Recharges'}: UseTransactionsProp
     }
   };
 
+  console.log(selectedItem);
 
 
 

@@ -28,21 +28,21 @@ import PaymentModal from '../components/HomeModal/PaymentModal';
 import {fetchWallet} from '../services/walletService';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useWallet} from '../hooks/useWallet';
-import { RootStackParamList } from '../navigation/RootNavigator ';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
+import {RootStackParamList} from '../navigation/RootNavigator ';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const HomeScreen: React.FC = () => {
-  
   const navigation =
-      useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const [tokenn, setTokenn] = useState<string>('');
   //  const {isLoading,isWaitingForPayment,handlePayment}=useWalletPayment();
   const [showModal, setShowModal] = useState(false);
   // const {data} = useWallet();
   console.log(API_TOKEN);
-  
+
+  const [lastPaymentTime, setLastPaymentTime] = useState<number | null>(null);
+
   const {data, loadWallet} = useWallet(USER_ID);
 
   const [balance, setBalance] = useState<number | null>(null);
@@ -53,17 +53,27 @@ const HomeScreen: React.FC = () => {
         const stored = await AsyncStorage.getItem('userData');
         if (stored) {
           const userData = JSON.parse(stored);
+          // Alert.alert('hii')
 
           setUserData(userData);
           setToken(userData.token);
           setUserId(userData?.user?.userId);
           setTokenn(userData.token);
           // loadWallet();
-
         }
       };
 
       getUserData();
+    }, []),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      const loadLastTime = async () => {
+        const t = await AsyncStorage.getItem('lastPaymentTime');
+        if (t) setLastPaymentTime(Number(t));
+      };
+      loadLastTime();
     }, []),
   );
 
@@ -106,8 +116,8 @@ const HomeScreen: React.FC = () => {
           {/* Actions */}
           <View className="flex-1 justify-between">
             <TouchableOpacity
-             onPress={() => navigation.navigate("MarginRatesScreen")}
-            className="bg-blue-500 py-3 rounded-xl items-center mb-2 shadow">
+              onPress={() => navigation.navigate('MarginRatesScreen')}
+              className="bg-blue-500 py-3 rounded-xl items-center mb-2 shadow">
               <MaterialCommunityIcons name="gift" size={24} color="#fff" />
               <Text className="text-xs text-white font-semibold mt-1">
                 Commission
@@ -116,7 +126,22 @@ const HomeScreen: React.FC = () => {
 
             <TouchableOpacity
               className="bg-blue-500 py-3 rounded-xl items-center shadow"
-              onPress={() => setShowModal(true)}>
+              // onPress={() => setShowModal(true)}
+              onPress={async () => {
+                const now = Date.now();
+
+                if (lastPaymentTime && now - lastPaymentTime < 5 * 60 * 1000) {
+                  const remaining = Math.ceil(
+                    (5 * 60 * 1000 - (now - lastPaymentTime)) / 1000,
+                  );
+                  Alert.alert('Wait', `Try again after ${remaining} seconds.`);
+                  return;
+                }
+
+                setShowModal(true);
+                await AsyncStorage.setItem('lastPaymentTime', String(now));
+                setLastPaymentTime(now);
+              }}>
               <AntDesign name="pluscircle" size={24} color="#fff" />
               <Text className="text-xs text-white font-semibold mt-1">Add</Text>
             </TouchableOpacity>

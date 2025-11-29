@@ -15,7 +15,7 @@ const BillPaymentsScreen: React.FC = () => {
   const popularServices: ServiceItem[] = [
     { name: 'Mobile Postpaid', icon: '📱' },
     { name: 'FasTag Recharge', icon: '🚗' },
-    { name: 'DTH/TV Recharge', icon: '📺' },
+    // { name: 'DTH/TV Recharge', icon: '📺' },
   ];
 
   const utilityServices: ServiceItem[] = [

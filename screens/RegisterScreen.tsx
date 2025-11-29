@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,10 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type RootStackParamList = {
-  RegisterScreen: { phoneNumber: string };
+  RegisterScreen: {phoneNumber: string};
   NameAndAadharForm: undefined;
   MainApp: undefined;
   PhoneNumberForm: undefined;
@@ -22,8 +22,9 @@ type RootStackParamList = {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RegisterScreen'>;
 
-const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { phoneNumber } = route.params;
+const RegisterScreen: React.FC<Props> = ({route, navigation}) => {
+  const {phoneNumber} = route.params;
+  const [registering, setRegistering] = useState(false);
 
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState(phoneNumber);
@@ -33,11 +34,50 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
   const isFormValid =
     name.trim() !== '' && mobile.trim() !== '' && email.trim() !== '';
 
+  // const handleRegister = async () => {
+  //   if (!isFormValid) {
+  //     Alert.alert('Error', 'Please fill all required fields.');
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch(
+  //       'https://api.recharge.kashishindiapvtltd.com/user/create',
+  //       {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ name, mobile, email, role }),
+  //       }
+  //     );
+
+  //     const text = await response.text();
+  //     let data;
+
+  //     try {
+  //       data = JSON.parse(text);
+  //     } catch (jsonError) {
+  //       console.error('Invalid JSON:', text);
+  //       throw new Error('Server did not return valid JSON.');
+  //     }
+
+  //     if (response.ok) {
+  //       Alert.alert('Success', 'Registered Successfully!');
+  //       navigation.navigate('PhoneNumberForm');
+  //     } else {
+  //       Alert.alert('Failed', data?.message || 'Registration failed');
+  //     }
+  //   } catch (error) {
+  //     console.error('Registration error:', error);
+  //     Alert.alert('Error', 'Something went wrong!');
+  //   }
+  // };
+
   const handleRegister = async () => {
-    if (!isFormValid) {
-      Alert.alert('Error', 'Please fill all required fields.');
-      return;
-    }
+    if (!isFormValid || registering) return; // protect double click
+
+    setRegistering(true); // 🔥 disable & show loader
 
     try {
       const response = await fetch(
@@ -47,8 +87,8 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name, mobile, email, role }),
-        }
+          body: JSON.stringify({name, mobile, email, role}),
+        },
       );
 
       const text = await response.text();
@@ -70,6 +110,8 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
     } catch (error) {
       console.error('Registration error:', error);
       Alert.alert('Error', 'Something went wrong!');
+    } finally {
+      setRegistering(false); // 🔥 enable again
     }
   };
 
@@ -77,8 +119,7 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
         className="flex-1"
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View className="flex-1 bg-white">
           {/* ✅ Header */}
           <View className="bg-green-600 w-full rounded-b-2xl py-12 items-center mb-5">
@@ -90,9 +131,8 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
 
           <ScrollView
             className="px-5 pt-7"
-            contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}
-            showsVerticalScrollIndicator={false}
-          >
+            contentContainerStyle={{alignItems: 'center', paddingBottom: 40}}
+            showsVerticalScrollIndicator={false}>
             <Text className="text-lg font-bold mb-6">
               Let's register to access!
             </Text>
@@ -113,7 +153,7 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
               placeholderTextColor="#000"
               onChangeText={setMobile}
             />
-  
+
             <TextInput
               className="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 text-base text-black"
               placeholder="Your E-mail"
@@ -129,7 +169,7 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               className={`w-full py-4 rounded-lg items-center mb-4 ${
                 isFormValid ? 'bg-green-600' : 'bg-gray-300'
               }`}
@@ -143,6 +183,17 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
               >
                 Register
               </Text>
+            </TouchableOpacity> */}
+
+            <TouchableOpacity
+              className={`w-full py-4 rounded-lg items-center mb-4 ${
+                isFormValid && !registering ? 'bg-green-600' : 'bg-gray-400'
+              }`}
+              onPress={handleRegister}
+              disabled={!isFormValid || registering}>
+              <Text className="text-base font-bold text-white">
+                {registering ? 'Registering...' : 'Register'}
+              </Text>
             </TouchableOpacity>
 
             <Text className="my-2 font-semibold">OR</Text>
@@ -155,13 +206,13 @@ const RegisterScreen: React.FC<Props> = ({ route, navigation }) => {
           {/* ✅ Help Section */}
           <View className="flex-row items-center justify-center gap-2 p-4 border-t border-gray-200 bg-white">
             <Text className="font-semibold">Need help?</Text>
-            <TouchableOpacity onPress={() => Linking.openURL('tel:+918502949494')}>
+            <TouchableOpacity
+              onPress={() => Linking.openURL('tel:+918502949494')}>
               <Text className="text-green-600 ml-1">📞 Call Us</Text>
             </TouchableOpacity>
             <Text className="text-lg">|</Text>
             <TouchableOpacity
-              onPress={() => Linking.openURL('https://wa.me/918502949494')}
-            >
+              onPress={() => Linking.openURL('https://wa.me/918502949494')}>
               <Text className="text-green-600 ml-1">💬 WhatsApp Us</Text>
             </TouchableOpacity>
           </View>

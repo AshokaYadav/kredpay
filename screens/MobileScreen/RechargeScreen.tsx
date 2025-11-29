@@ -121,6 +121,7 @@ export default function RechargeScreen() {
             <TextInput
               className="bg-white border border-green-500 placeholder:text-gray-400 rounded-full px-4 py-3 text-base"
               value={mobileNumber}
+              
               onChangeText={handleMobileNumberChange}
               placeholderTextColor="#A3A3A3"
               placeholder="Enter 10-digit mobile number"
@@ -134,10 +135,11 @@ export default function RechargeScreen() {
           <>
             <View className="mb-5">
               <TextInput
-                className="bg-white border border-green-300 rounded-full px-4 py-3 text-base"
+                className="bg-white border  placeholder:text-gray-400 border-green-300 rounded-full px-4 py-3 text-base"
                 value={searchAmount}
                 onChangeText={setSearchAmount}
                 placeholder="Search By Amount"
+                 placeholderTextColor="#A3A3A3"
                 keyboardType="numeric"
               />
             </View>
