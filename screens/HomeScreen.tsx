@@ -132,7 +132,7 @@ const HomeScreen: React.FC = () => {
 
                 if (lastPaymentTime && now - lastPaymentTime < 5 * 60 * 1000) {
                   const remaining = Math.ceil(
-                    (5 * 60 * 1000 - (now - lastPaymentTime)) / 1000,
+                    (1 * 60 * 1000 - (now - lastPaymentTime)) / 1000,
                   );
                   Alert.alert('Wait', `Try again after ${remaining} seconds.`);
                   return;
