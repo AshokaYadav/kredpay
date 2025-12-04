@@ -26,7 +26,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ visible, onClose,loadWallet
   const [amount, setAmount] = useState("");
 
 
-  const { isLoading, isWaitingForPayment, handlePayment } = useWalletPayment(onClose,loadWallet);
+  // const { isLoading, isWaitingForPayment, handlePayment } = useWalletPayment(onClose,loadWallet);
+
+    const { isLoading, isWaitingForPayment, handlePayment } = useWalletPayment(() => {
+      // ✅ Payment successful होने पर amount clear करो
+      setAmount("");
+      onClose();
+    },loadWallet);
 
   return (
     <Modal animationType="slide" transparent visible={visible} statusBarTranslucent>

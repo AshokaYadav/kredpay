@@ -14,7 +14,7 @@ export const useCategories = (token: string) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      try {7
+      try {
         const response = await api.get("/categories/all", {
           headers: { Authorization: `Bearer ${token}` },
         });

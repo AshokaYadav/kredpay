@@ -23,6 +23,7 @@ import D2HRechargeScreen from '../screens/DthScreen/D2HRechargeScreen';
 import DTHPlansScreen from '../screens/DthScreen/DTHPlansScreen';
 import BillPaymentsScreen from '../screens/BillPaymentsScreen';
 import MarginRatesScreen from '../screens/MarginRatesScreen';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Operatorr = {
   id: string;
@@ -73,71 +74,97 @@ export type RootStackParamList = {
     mobile: string;
   };
   Main: undefined;
-  RaiseComplaint:undefined;
-  DthRechargeScreen:{categoryId: string};
-  D2HRechargeScreen: { 
-    catId?:string;
+  RaiseComplaint: undefined;
+  DthRechargeScreen: {categoryId: string};
+  D2HRechargeScreen: {
+    catId?: string;
     categoryId?: string;
     selectedAmount?: number; // ✅ optional param
-    selectedOperator?:Operatorr
+    selectedOperator?: Operatorr;
   };
-  DTHPlansScreen:{categoryId?: string;};
-  BillPaymentsScreen:undefined;
-  MarginRatesScreen:undefined;
-  
+  DTHPlansScreen: {categoryId?: string};
+  BillPaymentsScreen: undefined;
+  MarginRatesScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = ({isLoggedIn}: {isLoggedIn: boolean}) => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-    header: () => (
-      <View style={{ height: 26, backgroundColor: 'green' }} />
-    )
-  }}
-      initialRouteName={isLoggedIn ? 'Main' : 'PhoneNumberForm'}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="PhoneNumberForm" component={PhoneNumberForm} />
-      <Stack.Screen name="Recharge" component={RechargeScreen} />
-      {/* <Stack.Screen name="MainApp" component={BottomTabs} /> */}
-      <Stack.Screen name="PaymentReceipt" component={PaymentReceipt} />
-      <Stack.Screen name="PaymentReceipt1" component={PaymentReceipt1} />
-      <Stack.Screen name="PaymentReceiptFail" component={PaymentReceiptFail} />
-      <Stack.Screen
-        name="Main"
-        component={DrawerNavigation}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen name="RaiseComplaint" component={RaiseComplaintScreen} />
+    <SafeAreaView edges={['top']}  className="flex-1 bg-green-500">
+      <Stack.Navigator
+        initialRouteName={isLoggedIn ? 'Main' : 'PhoneNumberForm'}>
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} 
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="PhoneNumberForm"
+          component={PhoneNumberForm}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="Recharge" component={RechargeScreen} options={{
+            headerShown: false,
+          }} />
+        {/* <Stack.Screen name="MainApp" component={BottomTabs} /> */}
+        <Stack.Screen name="PaymentReceipt" component={PaymentReceipt} />
+        <Stack.Screen name="PaymentReceipt1" component={PaymentReceipt1} />
+        <Stack.Screen
+          name="PaymentReceiptFail"
+          component={PaymentReceiptFail}
+        />
+        <Stack.Screen
+          name="Main"
+          component={DrawerNavigation}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="RaiseComplaint" component={RaiseComplaintScreen} />
 
-      <Stack.Screen name="OTPScreen" component={OTPScreen} />
-      {/* <Stack.Screen name="PlanDetailsScreen" component={PlanDetailsScreen} /> */}
-      <Stack.Screen name="PlanDetailsScreen1" component={PlanDetailsScreen1} />
-      <Stack.Screen
-        name="RechargeSuccessScreen"
-        component={RechargeSuccessScreen}
-      />
-      <Stack.Screen
-        name="PaymentOptionsScreen"
-        component={PaymentOptionsScreen}
-      />
-      <Stack.Screen
-        name="DthRechargeScreen"
-        component={DthRechargeScreen}
-      />
-      <Stack.Screen
-        name="D2HRechargeScreen"
-        component={D2HRechargeScreen}
-      />
-      <Stack.Screen name="DTHPlansScreen" component={DTHPlansScreen} />
-      <Stack.Screen name="BillPaymentsScreen" component={BillPaymentsScreen} />
-      {/* MarginRatesScreen */}
-      <Stack.Screen name="MarginRatesScreen" component={MarginRatesScreen} />
-
-    </Stack.Navigator>
+        <Stack.Screen name="OTPScreen" component={OTPScreen}
+         options={{
+            headerShown: false,
+          }}
+        />
+        {/* <Stack.Screen name="PlanDetailsScreen" component={PlanDetailsScreen} /> */}
+        <Stack.Screen
+          name="PlanDetailsScreen1"
+          component={PlanDetailsScreen1}
+           options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="RechargeSuccessScreen"
+          component={RechargeSuccessScreen}
+        />
+        <Stack.Screen
+          name="PaymentOptionsScreen"
+          component={PaymentOptionsScreen}
+        />
+        <Stack.Screen name="DthRechargeScreen" component={DthRechargeScreen}
+         options={{
+            headerShown: false,
+          }} />
+        <Stack.Screen name="D2HRechargeScreen" component={D2HRechargeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="DTHPlansScreen" component={DTHPlansScreen}  options={{
+            headerShown: false,
+          }} />
+        <Stack.Screen
+          name="BillPaymentsScreen"
+          component={BillPaymentsScreen}
+        />
+        {/* MarginRatesScreen */}
+        <Stack.Screen name="MarginRatesScreen" component={MarginRatesScreen} />
+      </Stack.Navigator>
+    </SafeAreaView>
   );
 };
 

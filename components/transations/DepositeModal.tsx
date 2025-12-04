@@ -4,13 +4,13 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
-interface TransactionModalProps {
+interface DepositeModalProps {
   isVisible: boolean;
   onClose: () => void;
   data: any;
 }
 
-const TransactionModal: React.FC<TransactionModalProps> = ({
+const DepositeModal: React.FC<DepositeModalProps> = ({
   isVisible,
   onClose,
   data,
@@ -51,11 +51,48 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
         </Text>
 
         {/* Transaction details */}
-        <View className="mb-2">
-          <Text className="text-gray-500 text-xs">Transaction Details</Text>
-          <Text className="text-gray-700 text-sm">
-            {data?.operator?.name || 'name'} | {data?.mobile || "number"}
+        {/* Transaction details */}
+        <View className="mb-4">
+          <Text className="text-gray-500 text-xs mb-1">
+            Transaction Details
           </Text>
+
+          <View className="bg-gray-50 p-3 rounded-lg space-y-1">
+            {/* Remote Order ID */}
+            {data?.remote_order_id && (
+              <View className="flex-row justify-between">
+                <Text className="text-gray-600 text-xs font-semibold">
+                  Order ID
+                </Text>
+                <Text className="text-gray-700 text-xs">
+                  {data.remote_order_id.charAt(0).toUpperCase() +
+                    data.remote_order_id.slice(1)}
+                </Text>
+              </View>
+            )}
+
+            {/* BANK RRN */}
+            {data?.bank_rrn && (
+              <View className="flex-row justify-between">
+                <Text className="text-gray-600 text-xs font-semibold">
+                  Bank RRN
+                </Text>
+                <Text className="text-gray-700 text-xs">{data.bank_rrn}</Text>
+              </View>
+            )}
+
+            {/* Debit UPI ID */}
+            {data?.debit_txn_upi_id && (
+              <View className="flex-row justify-between">
+                <Text className="text-gray-600 text-xs font-semibold">
+                  UPI ID
+                </Text>
+                <Text className="text-gray-700 text-xs">
+                  {data.debit_txn_upi_id}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
 
         <View className="mb-2">
@@ -79,18 +116,18 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
 
         <View className="mb-4">
           <Text className="text-gray-500 text-xs">Payment Method</Text>
-          <Text className="text-gray-700 text-sm">Wallet</Text>
+          <Text className="text-gray-700 text-sm">Upi Intent</Text>
         </View>
 
         {/* Buttons */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
-            onClose(); // close modal
-            navigation.navigate('RaiseComplaint', {txn: data}); // navigate
+            onClose(); 
+            navigation.navigate('RaiseComplaint', {txn: data});
           }}
           className="border border-pink-500 rounded-lg py-2 items-center mb-2">
           <Text className="text-pink-500 font-semibold">Raise a complaint</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View className="flex-row justify-between">
           <TouchableOpacity className="bg-yellow-100 px-4 py-2 rounded-lg">
@@ -108,4 +145,4 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
   );
 };
 
-export default TransactionModal;
+export default DepositeModal;

@@ -64,14 +64,14 @@ const DrawerNavigation: React.FC = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* 🔝 Custom Green Bar */}
-      <View
+      {/* <View
         style={{
           height: 26,
           backgroundColor: 'green',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-      </View>
+      </View> */}
 
       {/* 📦 Drawer Screens under the green bar */}
       <View style={{ flex: 1 }}>

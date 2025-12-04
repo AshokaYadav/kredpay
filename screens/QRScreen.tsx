@@ -23,6 +23,7 @@ import DepositeList from '../components/transations/DepositeList';
 import ComplaintsList from '../components/transations/ComplaintsList';
 import CompliantModal from '../components/transations/ComplaintModal';
 import LedgerBook from '../components/transations/LedgerBook';
+import DepositeModal from '../components/transations/DepositeModal';
 
 const QRScreen = () => {
   const navigation = useNavigation();
@@ -31,11 +32,14 @@ const QRScreen = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isCompModalVisible, setCompModalVisible] = useState(false);
+  const [isDepositeModalVisible, setDepositeModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
    const [compSelectedTransaction, setCompSelectedTransaction] = useState<any>(null);
+   const [depSelectedTransaction, setDepSelectedTransaction] = useState<any>(null);
 
   const toggleModal = () => setModalVisible(!isModalVisible);
   const ComptoggleModal = () => setCompModalVisible(!isCompModalVisible);
+   const DepotoggleModal = () => setDepositeModalVisible(!isDepositeModalVisible);
 
   const {
     selectedItem,
@@ -216,8 +220,8 @@ const QRScreen = () => {
           data={data}
           loading={loading}
           onSelect={item => {
-            setSelectedTransaction(item);
-            toggleModal();
+            setDepSelectedTransaction(item);
+            DepotoggleModal();
           }}
         />
       )}
@@ -255,6 +259,13 @@ const QRScreen = () => {
         onClose={ComptoggleModal}
         data={compSelectedTransaction}
       />
+
+       <DepositeModal
+        isVisible={isDepositeModalVisible}
+        onClose={DepotoggleModal}
+        data={depSelectedTransaction}
+      />
+
     </View>
   );
 };

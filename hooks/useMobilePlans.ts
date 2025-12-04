@@ -49,12 +49,12 @@ export function useMobilePlans(processedMobileNumber: string) {
         const circleDataRes: OperatorCircleResponse =
           await circleResponse.json();
 
-        console.log(circleDataRes);
         if (circleDataRes.err === 'Authentication required' || 
             (circleDataRes.message === 'Failed' && circleDataRes.data === null)) {
           // Use typed navigation
+          Alert.alert('circle data not get');
           
-          NavigationService.navigate('PhoneNumberForm');
+          // NavigationService.navigate('PhoneNumberForm');
           return;
         }
 
